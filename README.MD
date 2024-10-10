@@ -1,5 +1,64 @@
 # MVP
 
+## Frontend
+
+Rodar com `npm run dev`
+
+Páginas:
+  
+- Criar um processo
+- Visualizar histórico de um produto
+
+## Backend
+
+Rodar com `npm run dev`
+
+Iremos utilizar apenas uma carteira
+
+### Rotas (gateways)
+
+- Registrar um processo
+- Buscar histórico de um produto com base em seu id
+
+### Gerenciamento de Erros
+
+Para facilitar, criei um ErrorHandler, pq aí a gente n precisa ficar lidando com erros em todas as funções, só no handler.
+  
+### Serviços (internos à api)
+
+### Estruturas de dados
+
+```js
+// token processo 
+  {
+    owner: string,
+    data: {
+      id: number, // gerado pela blockchain
+      date: date // data que o processo aconteceu/foi finalizado,
+      entries: [] // tokenId[] dos produtos,
+      outs: [] // tokenId[] dos produtos, ()
+      name: string // (título do proceso - exemplo: venda de queijo),
+      description: string,
+      [...otherData] // outros dados especificos de cada empresa etc
+    }
+  }
+```
+
+```js
+// token produto 
+  {
+    owner: string,
+    data: {
+      id: number, // gerado pela blockchain
+      date: date // data que foi criado,
+      name: string // título do produto - exemplo: queijo,
+      description: string,
+      identificador: string // identificador do lote ou identificador da unidade
+      [...otherData] // outros dados especificos de cada empresa etc
+    }
+  }
+```
+
 ## Ideias da reunião
 
 ### Front
