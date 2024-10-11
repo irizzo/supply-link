@@ -1,5 +1,6 @@
 require('dotenv/config')
 
+const { getTokenMetadata } = require('./src/services')
 const _API_KEY = process.env.API_KEY
 const _WALLET_ADDRESS = process.env.WALLET_ADDRESS
 

@@ -1,23 +1,40 @@
+const { CustomError } = require("../resources/error")
+const axios = require('axios')
+
 const BASEURL = process.env.ABAKUS_API_URL
 
 const customHeaders = new Headers({
-	// 'Content-type': 'application/json; charset=UTF-8',
+	'Content-type': 'application/json; charset=UTF-8',
 	'x-api-key': process.env.API_KEY
 })
 
 exports.mintToken = async (walletAddress, tokenData) => {
 	console.log('[mintToken]')
 
-	const response = await fetch(`${BASEURL}/mint`, {
-		method: 'POST',
-		body: JSON.stringify({ owner: walletAddress, data: tokenData}),
-		headers: customHeaders
-	}).then((res) => {
-		return res.json()
-	})
+	try {
+	
+	const response = await axios.post(`${BASEURL}/mint`, {
+		owner: walletAddress,
+		data: tokenData
+	}, {
+		headers: {
+			'x-api-key': process.env.API_KEY
+		}
+	});
+	
+	// const response = await fetch(`${BASEURL}/mint`, {
+	// 	method: 'POST',
+	// 	body: JSON.stringify({ owner: walletAddress, data: tokenData}),
+	// 	headers: customHeaders
+	// })
 
 	console.log('response: ', response)
 	return response
+	
+	} catch(error) {
+		console.log('error: ', error)
+		throw error
+	}
 }
 
 exports.getTokensByOwner = async (walletAddress, signature) => {
@@ -38,15 +55,15 @@ exports.getTokensByOwner = async (walletAddress, signature) => {
 exports.getTokenMetadata = async (walletAddress, tokenId) => {
 	console.log('[getTokenMetadata]')
 
-	const response = await fetch(`${BASEURL}/getMetadataByTokenId` + new URLSearchParams({ owner: walletAddress, tokenId: tokenId }).toString(), {
+	const response = await fetch(`${BASEURL}/getMetadataByTokenId?owner=${walletAddress}&tokenId=${tokenId}`, {
 		method: 'GET',
 		headers: customHeaders
-	}).then((res) => {
-		return res.json()
 	})
 
-	console.log('response: ', response)
-	return response
+	if (!response.ok) throw CustomError('ABAKHUS_API_ERROR', 500)
+
+  const data = await response.json()
+	return data
 }
 
 exports.verifyConnection = async () => {

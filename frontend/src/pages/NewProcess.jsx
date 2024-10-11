@@ -66,13 +66,14 @@ const NewProcess = () => {
 
     const signature = await signer.signMessage("Please sign this message to verify your ownership");
     const tokenRes = await fetchTokensByOwner({ walletAddress: account, signature })
-    
+
     setOwnerTokens(tokenRes.result.tokens)
   }
 
   return (
     <>
       <div>
+        {console.log('ownerTokens: ',ownerTokens)}
         <h1>Interaja com ERC 1155</h1>
         {account ? (
           <div>
