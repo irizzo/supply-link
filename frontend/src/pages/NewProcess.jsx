@@ -1,4 +1,4 @@
-const NewProduct = () => {
+const NewProcess = () => {
   return (
     <>
         Página novo produto
@@ -6,4 +6,4 @@ const NewProduct = () => {
   );
 };
 
-export default NewProduct;
+export default NewProcess;
