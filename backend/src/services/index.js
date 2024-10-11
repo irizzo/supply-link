@@ -26,11 +26,9 @@ exports.getTokensByOwner = async (walletAddress, signature) => {
 	console.log('walletAddress: ', walletAddress)
 	console.log('signature: ', signature)
 
-	const response = await fetch(`${BASEURL}/getTokensByOwner` + new URLSearchParams({ owner: walletAddress, signature: signature }).toString(), {
+	const response = await fetch(`${BASEURL}/getTokensByOwner?owner=${walletAddress}&signature=${signature}`, {
 		method: 'GET',
 		headers: customHeaders
-	}).then((res) => {
-		return res.json()
 	})
 
 	console.log('response: ', response)

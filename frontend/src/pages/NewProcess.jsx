@@ -39,24 +39,6 @@ const NewProcess = () => {
 
     connectWallet();
 
-    async function handleGetOwnerTokens() {
-      console.log('handleGetOwnerTokens')
-
-      if(signer) {
-        const signature = await signer.signMessage("Please sign this message to verify your ownership");
-        console.log('signature: ', signature)
-
-        const tokenRes = await fetchTokensByOwner({ walletAddress: account, signature })
-        console.log('tokenRes: ', tokenRes)
-
-        setOwnerTokens(tokenRes.result.tokens)
-
-        console.log('ownerTokens: ', ownerTokens)
-      }
-    }
-
-    handleGetOwnerTokens()
-
     // Add event listener for account changes
     const handleAccountsChanged = (accounts) => {
       if (accounts.length > 0 && accounts[0] !== account) {
@@ -78,9 +60,18 @@ const NewProcess = () => {
 
   }, [account]);
 
+  async function handleGetOwnerTokens(e) {
+    console.log('handleGetOwnerTokens')
+    e.preventDefault();
+
+    const signature = await signer.signMessage("Please sign this message to verify your ownership");
+    const tokenRes = await fetchTokensByOwner({ walletAddress: account, signature })
+    
+    setOwnerTokens(tokenRes.result.tokens)
+  }
+
   return (
     <>
-      {console.log('signer: ', signer) /* provider: {}, address: string (carteira)*/} 
       <div>
         <h1>Interaja com ERC 1155</h1>
         {account ? (
@@ -92,6 +83,8 @@ const NewProcess = () => {
           <p>Conecte sua MetaMask</p>
         )}
       </div>
+
+      <button onClick={(e) => handleGetOwnerTokens(e)}>Carregar</button>
     </>
   );
 };

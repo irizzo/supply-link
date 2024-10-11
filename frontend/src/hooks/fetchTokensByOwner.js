@@ -7,8 +7,6 @@ import { API_URL } from '../../config'
  */
 export default async function fetchTokensByOwner(data) {
   console.log('[fetchTokensByOwner]')
-  console.log('[fetchTokensByOwner] data: ', data)
-
 
   const url = `${API_URL}/chain/getOwnerTokensIds`;
 
