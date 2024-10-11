@@ -1,18 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NewProduct from "./pages/NewProduct";
-import EditProduct from "./pages/EditProduct";
+import NewProcess from "./pages/NewProcess";
 import ViewProductChain from "./pages/ViewProductChain";
-
+import Home from "./pages/Home";
 import "./app.css"
 
 const App = () => {
   return (
     <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<NewProduct/>} />
-          <Route path="/edit_product" element={<EditProduct/>} />
-          <Route path="/view_product" element={<ViewProductChain/>} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/new_process" element={<NewProcess />} />
+        <Route path="/view_product" element={<ViewProductChain />} />
+      </Routes>
     </BrowserRouter>
   );
 };

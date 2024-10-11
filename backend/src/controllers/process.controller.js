@@ -19,7 +19,7 @@ exports.registerProcess = async (req, res, next) => {
 		// JSON inicial do processo
 		const processMintData = {
 			...processData,
-			entries: [],
+			entries: [],  
 			outs: [] // TODO: PENSAR NUM NOME MELHOR PRA SAÍDAS KKKK
 		}
 
