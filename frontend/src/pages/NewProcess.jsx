@@ -59,7 +59,18 @@ const NewProcess = () => {
 
   return (
     <>
-        Página novo produto
+      {console.log('signer: ', signer) /* provider: {}, address: string (carteira)*/} 
+      <div>
+        <h1>Interaja com ERC 1155</h1>
+        {account ? (
+          <div>
+            <p>Conectado: {account}</p>
+            <p>Contrato: {contract}</p>
+          </div>
+        ) : (
+          <p>Conecte sua MetaMask</p>
+        )}
+      </div>
     </>
   );
 };
