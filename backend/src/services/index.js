@@ -1,7 +1,7 @@
 const BASEURL = process.env.ABAKUS_API_URL
 
 const customHeaders = new Headers({
-	'Content-type': 'application/json; charset=UTF-8',
+	// 'Content-type': 'application/json; charset=UTF-8',
 	'x-api-key': process.env.API_KEY
 })
 
@@ -23,9 +23,25 @@ exports.mintToken = async (walletAddress, tokenData) => {
 exports.getTokensByOwner = async (walletAddress, signature) => {
 	console.log('[getTokensByOwner]')
 
-	const response = await fetch(`${BASEURL}/getTokensByOwner`, {
+	console.log('walletAddress: ', walletAddress)
+	console.log('signature: ', signature)
+
+	const response = await fetch(`${BASEURL}/getTokensByOwner` + new URLSearchParams({ owner: walletAddress, signature: signature }).toString(), {
 		method: 'GET',
-		body: JSON.stringify({ owner: walletAddress, signature: signature }),
+		headers: customHeaders
+	}).then((res) => {
+		return res.json()
+	})
+
+	console.log('response: ', response)
+	return response
+}
+
+exports.getTokenMetadata = async (walletAddress, tokenId) => {
+	console.log('[getTokenMetadata]')
+
+	const response = await fetch(`${BASEURL}/getMetadataByTokenId` + new URLSearchParams({ owner: walletAddress, tokenId: tokenId }).toString(), {
+		method: 'GET',
 		headers: customHeaders
 	}).then((res) => {
 		return res.json()
