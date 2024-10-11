@@ -1,0 +1,32 @@
+.new_process_process_info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.new_process_main{
+  margin: 1%;
+  display: flex;
+  justify-content:space-around;
+  align-items: flex-start;
+}
+
+.mb-3{
+  margin:2%
+}
+
+.new_process_newProduct{
+  display: flex;
+  flex-direction: column;
+}
+
+.new_process_process_info Button{
+  width: 100px;
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+.new_process_text_form{
+  margin-bottom: 4%;
+  margin-top: 4%;
+}
