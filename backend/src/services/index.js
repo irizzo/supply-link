@@ -8,30 +8,20 @@ const customHeaders = new Headers({
 	'x-api-key': process.env.API_KEY
 })
 
-exports.mintToken = async (walletAddress, tokenData) => {
+exports.mintToken = async (walletAddress, mintData) => {
 	console.log('[mintToken]')
 
 	try {
-	
-	const response = await axios.post(`${BASEURL}/mint`, {
-		owner: walletAddress,
-		data: tokenData
-	}, {
-		headers: {
-			'x-api-key': process.env.API_KEY
-		}
-	});
-	
-	// const response = await fetch(`${BASEURL}/mint`, {
-	// 	method: 'POST',
-	// 	body: JSON.stringify({ owner: walletAddress, data: tokenData}),
-	// 	headers: customHeaders
-	// })
+		const response = await fetch(`${BASEURL}/mint`, {
+			method: 'POST',
+			body: JSON.stringify({ owner: walletAddress, data: JSON.stringify(mintData) }),
+			headers: customHeaders
+		})
 
-	console.log('response: ', response)
-	return response
-	
-	} catch(error) {
+		console.log('response: ', response)
+		return response
+
+	} catch (error) {
 		console.log('error: ', error)
 		throw error
 	}
@@ -62,7 +52,7 @@ exports.getTokenMetadata = async (walletAddress, tokenId) => {
 
 	if (!response.ok) throw CustomError('ABAKHUS_API_ERROR', 500)
 
-  const data = await response.json()
+	const data = await response.json()
 	return data
 }
 
