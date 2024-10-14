@@ -1,5 +1,4 @@
 const { CustomError } = require("../resources/error")
-const axios = require('axios')
 
 const BASEURL = process.env.ABAKUS_API_URL
 
