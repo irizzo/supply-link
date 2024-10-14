@@ -12,7 +12,6 @@ const NewProcess = () => {
 
   return (
     <>
-
       <div className="new_process_process_info" >
         <h2>Página novo produto</h2>
         <Form.Group className=" ">
