@@ -13,8 +13,7 @@ import submitProcessForm from '../hooks/submitProcessForm';
 const contractAddress = CONTRACT_ADDRESS;
 
 const date = new Date()
-let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
-//console.log(currentDate);
+let currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}`
 
 const mockData = {
   processData: {

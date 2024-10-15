@@ -1,24 +1,6 @@
 const { getTokensByOwner, getTokenMetadata } = require("../services")
 const { CustomError } = require('../resources/error')
 
-// Pegar todos os tokens da cadeia com base na id de um token
-exports.getTokenChain = async (req, res, next) => {
-  console.log('[getTokenChain]')
-
-  try {
-    // 	CÓDIGO DO CONTROLADOR
-
-
-
-    res.status(200).send({
-      code: 'OK',
-      result: {}
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 exports.getOwnerTokens = async (req, res, next) => {
   console.log('[getOwnerTokens]')
 
@@ -50,3 +32,4 @@ exports.getOwnerTokens = async (req, res, next) => {
     next(error)
   }
 }
+

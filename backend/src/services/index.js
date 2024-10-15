@@ -26,6 +26,7 @@ exports.mintToken = async (walletAddress, mintData) => {
 	}
 }
 
+// Retorna uma lista de token IDs
 exports.getTokensByOwner = async (walletAddress, signature) => {
 	console.log('[getTokensByOwner]')
 
@@ -41,6 +42,7 @@ exports.getTokensByOwner = async (walletAddress, signature) => {
 	return response
 }
 
+// Retorna metadados de um token a partir de seu ID
 exports.getTokenMetadata = async (walletAddress, tokenId) => {
 	console.log('[getTokenMetadata]')
 
@@ -68,3 +70,4 @@ exports.verifyConnection = async () => {
 	console.log('response: ', response)
 	return response
 }
+
