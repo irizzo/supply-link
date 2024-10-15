@@ -1,37 +1,66 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getProductHistory from "../hooks/getProductHistory";
-import "../pages/viewProduct.css"
-
+import "../pages/viewProduct.css";
 
 const ViewProductChain = () => {
   const [history, setHistory] = useState([]);
+  const [load, setLoading] = useState("");
+  const [productId, setProductId] = useState(""); // Estado para armazenar o ID do produto
 
+  
   const productHistory = async () => {
-    const a = await getProductHistory();
-    setHistory(a.result);
-  }
+    if (!productId) {
+      alert("Por favor, insira um ID de produto válido.");
+      return;
+    }
+
+    try {
+      const result = await getProductHistory();
+      setLoading("Fazendo Busca..."); 
+      setTimeout(() => {
+        setHistory(result.result);
+      setLoading(""); 
+
+      }, 2000);
+
+    } catch (error) {
+      console.error("Erro ao buscar histórico:", error);
+      setLoading("Erro ao buscar histórico. Tente novamente.");
+    }
+  };
 
   return (
-    <>
-      <div className="view_product_divmain" >
-        <div className="view_product_details" >
-          <input placeholder="Digite o ID do produto" type="text" />
-        </div>
-        <button onClick={() => productHistory()} >Procurar cadeia de processos do produto </button>
-        
-        {history.length > 0 &&
-        
-          history.map((process) => {
-            console.log(process)
-            return (
-              <div style={{border: "2px solid black"}}>
-                <p>Nome processo : {process.processData.name}</p>
-              </div>
-            );
-          })}
-
+    <div className="view_product_divmain">
+      <div className="view_product_details">
+        <p>Id do queijo: LT202410_QQQ</p>
+        <input
+          placeholder="Digite o ID do produto"
+          type="text"
+          value={productId}
+          onChange={(e) => setProductId(e.target.value)} 
+        />
       </div>
-    </>
+      <button onClick={productHistory}>Procurar cadeia de processos de um produto</button>
+      {load && <p>{load}</p>}
+
+      {history.length > 0 &&
+        history.map((process, index) => {
+          return (
+            <div key={index} className="process_info">
+              <p>Nome do processo: {process.processData.name}</p>
+              <p>Data do processo: {process.processData.date}</p>
+              <p>Descrição do processo: {process.processData.description}</p>
+              <p>
+                Insumos do processo:{" "}
+                {process.processEntries.length > 0
+                  ? process.processEntries.join(", ")
+                  : "Nenhum insumo encontrado"}
+              </p>
+              <p>Saídas do processo: {process.processOuts[0].name || process.processOuts[0]} </p>
+            </div>
+          );
+        })}
+    </div>
   );
 };
 
