@@ -25,8 +25,8 @@ const Home = () => {
 					</Container>
 				</Navbar>
 				<img className="logo" src={Logo} alt="" />
-				<span className="home_span" >O software Supply Link pretende trazer mais transparência, confiança e segurança para os processos e sistemas de lógistica já implementados em empresas
-					trazendo as características da rede blockchain  </span>
+				<span className="home_span"> O software Supply Link pretende trazer mais transparência, confiança e segurança para os processos e sistemas de lógistica já implementados em empresas.
+					trazendo consigo as características e os benefícios da rede blockchain </span>
 
 			</div>
 		</>
