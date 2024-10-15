@@ -22,16 +22,16 @@ const data = {
     description: "Produção de queijo minas frescal"
   },
   processType: "",
-  // processEntries: ["LT202410_SSS", "LT202410_CCC"],
-  // processOuts: [
-  //   {
-  //     date: "2024-10-10T15:00",
-  //     name: "Queijo minas frescal",
-  //     description: "Queijo minas frescal",
-  //     uniqueId: "LT202410_QQQ",
-  //     tokenType: "product"
-  //   },
-  // ]
+  processEntries: ["LT202410_SSS", "LT202410_CCC"],
+  processOuts: [
+    {
+      date: "2024-10-10T15:00",
+      name: "Queijo minas frescal",
+      description: "Queijo minas frescal",
+      uniqueId: "LT202410_QQQ",
+      tokenType: "product"
+    },
+  ]
 }
 
 
@@ -44,8 +44,8 @@ const NewProcess = () => {
   const [mockData, setMock] = useState(data);
 
   const handleProcessFormSubmit = () => {
-    // submitProcessForm(account, processData)
-    window.alert(`Processo cadastrado com sucesso! Nome do processo ${mockData.processData.name}`)
+    submitProcessForm(account, processData)
+    // window.alert(`Processo cadastrado com sucesso! Nome do processo ${mockData.processData.name}`)
   }
 
   useEffect(() => {
@@ -116,9 +116,7 @@ const NewProcess = () => {
           <Form.Label>Digite aqui as informações do processo a ser cadastrado</Form.Label>
           <Form.Control className="form_control" value={JSON.stringify(processData)} as="textarea" rows={5} />
         </Form.Group>
-        <Button onClick={(e) => {
-          setProcessData(mockData)
-        }} variant="secondary">Popular</Button>
+        <Button onClick={() => { setProcessData(mockData) }} variant="secondary">Popular</Button>
         <Button onClick={() => handleProcessFormSubmit()} variant="secondary">Cadastrar</Button>
         {/* Quando clicar no botão popular nos setamos os dados do processData */}
       </div>
@@ -127,10 +125,10 @@ const NewProcess = () => {
         <Form>
           {['radio'].map((type) => (
             <div key={`inline-${type}`} >
-              <Form.Check onClick={(e) => {
+              <Form.Check onClick={() => {
                 setMock({
-                  mockData,
-                  type: "create"
+                  ...mockData,
+                  processType: "create"
                 })
                 // setAddProduct(true)
                 document.getElementById("new_process_newProduct").className = "new_process_newProduct"
@@ -142,11 +140,10 @@ const NewProcess = () => {
                 type={type}
                 id={`inline-${type}-1`}
               />
-              <Form.Check onClick={(e) => {
+              <Form.Check onClick={() => {
                 setMock({
-                          mockData,
-
-                  type: "update"
+                  ...mockData,
+                  processType: "update"
                 })
                 // setAddProduct(true)
 

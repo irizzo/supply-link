@@ -1,13 +1,13 @@
 import { useState } from "react";
 import getProductHistory from "../hooks/getProductHistory";
-import "../pages/viewProduct.css";
+import "../pages/viewProduct.css"
 
 const ViewProductChain = () => {
   const [history, setHistory] = useState([]);
   const [load, setLoading] = useState("");
   const [productId, setProductId] = useState(""); // Estado para armazenar o ID do produto
 
-  
+
   const productHistory = async () => {
     if (!productId) {
       alert("Por favor, insira um ID de produto válido.");
@@ -16,10 +16,10 @@ const ViewProductChain = () => {
 
     try {
       const result = await getProductHistory();
-      setLoading("Fazendo Busca..."); 
+      setLoading("Fazendo Busca...");
       setTimeout(() => {
         setHistory(result.result);
-      setLoading(""); 
+        setLoading("");
 
       }, 2000);
 
@@ -29,24 +29,32 @@ const ViewProductChain = () => {
     }
   };
 
+  let i = 0;
   return (
     <div className="view_product_divmain">
-      <div className="view_product_details">
-        <p>Id do queijo: LT202410_QQQ</p>
-        <input
-          placeholder="Digite o ID do produto"
-          type="text"
-          value={productId}
-          onChange={(e) => setProductId(e.target.value)} 
-        />
+      <div className="search">
+        <div className="view_product_details">
+          <p>Id do queijo: LT202410_QQQ</p>
+          <input
+            placeholder="Digite o ID do produto"
+            type="text"
+            value={productId}
+            onChange={(e) => setProductId(e.target.value)}
+          />
+        </div>
+        <button onClick={productHistory}>Procurar cadeia de processos de um produto</button>
       </div>
-      <button onClick={productHistory}>Procurar cadeia de processos de um produto</button>
       {load && <p>{load}</p>}
 
-      {history.length > 0 &&
-        history.map((process, index) => {
+      {history.length > 0 && <div className="product-chain">
+
+        {
+        
+        history.map((process) => {
+          i++;
           return (
-            <div key={index} className="process_info">
+            <div key={i} className="process-card">
+              <p className="process-index">{i}</p>
               <p>Nome do processo: {process.processData.name}</p>
               <p>Data do processo: {process.processData.date}</p>
               <p>Descrição do processo: {process.processData.description}</p>
@@ -60,6 +68,7 @@ const ViewProductChain = () => {
             </div>
           );
         })}
+      </div>}
     </div>
   );
 };
