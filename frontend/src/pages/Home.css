@@ -1,0 +1,16 @@
+.home_div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.home_span{
+  margin-top: 10%;
+  width: 50%;
+  text-align: center;
+}
+.logo{
+  margin-top: 4%;
+}
