@@ -3,12 +3,16 @@ import Button from "react-bootstrap/Button"
 import "../pages/NewProcess.css"
 import { useState } from "react";
 
+//TODO A pessoa não pode clicar em 2 checkbox
+//TODO trocar de checkbox para radius
+//TODO a pessoa pode ir trocando entre os tipos de processo 
+
 const date = new Date()
 let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 console.log(currentDate);
 const NewProcess = () => {
-
   const [mockData, setMock] = useState({});
+  const [addproduct, setAddProduct] = useState(true);
 
   return (
     <>
@@ -28,25 +32,74 @@ const NewProcess = () => {
         {/* Quando clicar no botão popular nos setamos os dados do processData */}
       </div>
       <div className="new_process_set" >
-        <Form.Check onClick={(e) => {
-          setMock({
-            data_de_criacao: currentDate,
-            nome: "Produção do quejo",
-            descricao: "processo de produção do queijo a partir da manipulação do leite",
-            type: "create"
-          })
-          document.getElementById("new_process_newProduct").className = "new_process_newProduct"
-        }} type={"checkbox"} label={`Esse processo cria um novo produto ?`} />
 
-        <Form.Check onClick={(e) => {
-          setMock({
-            data_de_criacao: currentDate,
-            nome: "Produção do quejo",
-            descricao: "processo de produção do queijo a partir da manipulação do leite",
-            type: "Update"
-          })
-          document.getElementById("new_process_att_product").className = "new_process_att_product"
-        }} id="checkbox_new_product" type={"checkbox"} label={`Esse processo atualiza um produto já existente?`} />
+      <Form>
+      {['radio'].map((type) => (
+        <div key={`inline-${type}`} className="mb-3">
+          <Form.Check onClick={(e)=> {
+            setMock({
+              data_de_criacao: currentDate,
+              nome: "Produção do quejo",
+              descricao: "processo de produção do queijo a partir da manipulação do leite",
+              type: "create"
+            })
+            // setAddProduct(true)
+              document.getElementById("new_process_newProduct").className = "new_process_newProduct"
+              document.getElementById("new_process_att_product").className ="new_process_att_product_none"
+          }}
+            inline
+            label="1"
+            name="group1"
+            type={type}
+            id={`inline-${type}-1`}
+          />
+          <Form.Check onClick={(e)=> {
+            setMock({
+              data_de_criacao: currentDate,
+              nome: "Produção do quejo",
+              descricao: "processo de produção do queijo a partir da manipulação do leite",
+              type: "update"
+            })
+            // setAddProduct(true)
+            
+              document.getElementById("new_process_att_product").className ="new_process_att_product"
+              document.getElementById("new_process_newProduct").className = "new_process_newProduct_none"
+            
+            }}
+            inline
+            label="2"
+            name="group1"
+            type={type}
+            id={`inline-${type}-2`}
+          />
+        </div>
+      ))}
+    </Form>
+
+        {/* <form>
+          {["radio"].map((type) => (
+            <div key={`inline-${type}`}>
+              <Form.Check onClick={(e) => {
+                setMock({
+                  data_de_criacao: currentDate,
+                  nome: "Produção do quejo",
+                  descricao: "processo de produção do queijo a partir da manipulação do leite",
+                  type: "create"
+                })
+                document.getElementById("new_process_newProduct").className = "new_process_newProduct"
+              }} inline id={`inline-${type}-1`} type={type} label={`Esse processo cria um novo produto ?`} />
+              <Form.Check onClick={(e) => {
+                setMock({
+                  data_de_criacao: currentDate,
+                  nome: "Produção do quejo",
+                  descricao: "processo de produção do queijo a partir da manipulação do leite",
+                  type: "update"
+                })
+                document.getElementById("new_process_att_product").className = "new_process_att_product"
+              }} inline id={`inline-${type}-2`} type={type} label={`Esse processo atualiza um produto já existente?`} />
+            </div>
+          ))}
+        </form> */}
       </div>
       <div className="new_process_main">
         <div id="new_process_newProduct" className="new_process_newProduct_none" >
