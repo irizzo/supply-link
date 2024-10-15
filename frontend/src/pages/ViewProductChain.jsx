@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getProductHistory from "../hooks/getProductHistory";
 import "../pages/viewProduct.css"
-
 
 const ViewProductChain = () => {
   const [history, setHistory] = useState([]);
@@ -11,25 +10,32 @@ const ViewProductChain = () => {
     setHistory(a.result);
   }
 
+  let i = 0;
   return (
     <>
       <div className="view_product_divmain" >
-        <div className="view_product_details" >
-          <input placeholder="Digite o ID do produto" type="text" />
+        <div className="search">
+          <div className="view_product_details" >
+            <input placeholder="Digite o ID do produto" type="text" />
+          </div>
+          <button className="chain-button" onClick={() => productHistory()} > Procurar cadeia de processos do produto {'> '}</button>
         </div>
-        <button onClick={() => productHistory()} >Procurar cadeia de processos do produto </button>
-        
-        {history.length > 0 &&
-        
-          history.map((process) => {
-            console.log(process)
-            return (
-              <div style={{border: "2px solid black"}}>
-                <p>Nome processo : {process.processData.name}</p>
-              </div>
-            );
-          })}
 
+        {history.length > 0 && <div className="product-chain">
+          
+          {
+            history.map((process) => {
+              i++;
+              console.log(process)
+              return (
+                <div key={i} className="process-card">
+                  <p className="process-index">{i}</p>
+                  <p>Nome processo : {process.processData.name}</p>
+                </div>
+              );
+            })
+          }
+        </div>}
       </div>
     </>
   );

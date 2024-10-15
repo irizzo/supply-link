@@ -116,9 +116,7 @@ const NewProcess = () => {
           <Form.Label>Digite aqui as informações do processo a ser cadastrado</Form.Label>
           <Form.Control className="form_control" value={JSON.stringify(processData)} as="textarea" rows={5} />
         </Form.Group>
-        <Button onClick={(e) => {
-          setProcessData(mockData)
-        }} variant="secondary">Popular</Button>
+        <Button onClick={() => { setProcessData(mockData) }} variant="secondary">Popular</Button>
         <Button onClick={() => handleProcessFormSubmit()} variant="secondary">Cadastrar</Button>
         {/* Quando clicar no botão popular nos setamos os dados do processData */}
       </div>
@@ -127,9 +125,9 @@ const NewProcess = () => {
         <Form>
           {['radio'].map((type) => (
             <div key={`inline-${type}`} >
-              <Form.Check onClick={(e) => {
+              <Form.Check onClick={() => {
                 setMock({
-                  mockData,
+                  ...mockData,
                   type: "create"
                 })
                 // setAddProduct(true)
@@ -142,10 +140,9 @@ const NewProcess = () => {
                 type={type}
                 id={`inline-${type}-1`}
               />
-              <Form.Check onClick={(e) => {
+              <Form.Check onClick={() => {
                 setMock({
-                          mockData,
-
+                  ...mockData,
                   type: "update"
                 })
                 // setAddProduct(true)
