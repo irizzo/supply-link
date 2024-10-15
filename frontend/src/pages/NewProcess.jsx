@@ -35,7 +35,7 @@ const NewProcess = () => {
 
       <Form>
       {['radio'].map((type) => (
-        <div key={`inline-${type}`} className="mb-3">
+        <div key={`inline-${type}`} >
           <Form.Check onClick={(e)=> {
             setMock({
               data_de_criacao: currentDate,
@@ -48,7 +48,7 @@ const NewProcess = () => {
               document.getElementById("new_process_att_product").className ="new_process_att_product_none"
           }}
             inline
-            label="1"
+            label="Esse processo cria um novo produto"
             name="group1"
             type={type}
             id={`inline-${type}-1`}
@@ -67,7 +67,7 @@ const NewProcess = () => {
             
             }}
             inline
-            label="2"
+            label="Esse processo atualiza um produto já existente"
             name="group1"
             type={type}
             id={`inline-${type}-2`}
@@ -75,31 +75,6 @@ const NewProcess = () => {
         </div>
       ))}
     </Form>
-
-        {/* <form>
-          {["radio"].map((type) => (
-            <div key={`inline-${type}`}>
-              <Form.Check onClick={(e) => {
-                setMock({
-                  data_de_criacao: currentDate,
-                  nome: "Produção do quejo",
-                  descricao: "processo de produção do queijo a partir da manipulação do leite",
-                  type: "create"
-                })
-                document.getElementById("new_process_newProduct").className = "new_process_newProduct"
-              }} inline id={`inline-${type}-1`} type={type} label={`Esse processo cria um novo produto ?`} />
-              <Form.Check onClick={(e) => {
-                setMock({
-                  data_de_criacao: currentDate,
-                  nome: "Produção do quejo",
-                  descricao: "processo de produção do queijo a partir da manipulação do leite",
-                  type: "update"
-                })
-                document.getElementById("new_process_att_product").className = "new_process_att_product"
-              }} inline id={`inline-${type}-2`} type={type} label={`Esse processo atualiza um produto já existente?`} />
-            </div>
-          ))}
-        </form> */}
       </div>
       <div className="new_process_main">
         <div id="new_process_newProduct" className="new_process_newProduct_none" >
