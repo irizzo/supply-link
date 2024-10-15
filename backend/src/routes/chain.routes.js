@@ -8,8 +8,8 @@ router
 	.get(chainController.getTokenChain)
 
 router
-	.route('/getOwnerTokensIds') // route: /chain/getOwnerTokensIds
-	.post(chainController.getOwnerTokensIds)
+	.route('/getOwnerTokens') // route: /chain/getOwnerTokensIds
+	.post(chainController.getOwnerTokens)
 
 
 module.exports = router

@@ -1,20 +1,14 @@
 import { API_URL } from '../../config'
 
-/**
- * 
- * @param { walletAddress: string, signature: string } data 
- * @returns 
- */
-export default async function fetchTokensByOwner(data) {
-  console.log('[fetchTokensByOwner]')
-  console.debug('[fetchTokensByOwner]', data)
+export default async function submitProcessForm(walletAddress, data) {
+  console.log('[submitProcessForm]')
 
-  const url = `${API_URL}/chain/getOwnerTokens`;
+  const url = `${API_URL}/process`;
 
   try {
     const response = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({ walletAddress, data }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Origin': 'cors'
@@ -25,12 +19,13 @@ export default async function fetchTokensByOwner(data) {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    console.debug("[frontendTokenResponse]", response)
+    console.debug("[backendTokenResponse]", response)
     const json = await response.json();
-    console.debug("[frontendTokenResponse]", json)
+    console.debug("[backendTokenResponse]", json)
     return json;
     
   } catch (error) {
     console.error(error.message);
   }
 }
+

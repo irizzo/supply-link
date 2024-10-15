@@ -8,19 +8,43 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 
 import "../pages/NewProcess.css"
+import submitProcessForm from '../hooks/submitProcessForm';
 
 const contractAddress = CONTRACT_ADDRESS;
 
 const date = new Date()
 let currentDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
-console.log(currentDate);
+//console.log(currentDate);
+
+const mockData = {
+  processData: {
+    date: currentDate,
+    name: "Produção do Queijo",
+    description: "processo de produção do queijo a partir da manipulação do leite"
+  },
+	processEntries: [],
+	processOuts: [
+		{
+			date: "2024-10-10T10:00",
+			name: "Nome do Produto",
+			description: "Descrição do Produto",
+			uniqueId: "LT202410_CCC",
+			tokenType: "product"
+		}
+  ],
+  processType: ""
+}
 
 const NewProcess = () => {
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState('');
   const [signer, setSigner] = useState(null);
   const [ownerTokens, setOwnerTokens] = useState([]);
-  const [mockData, setMock] = useState({});
+  const [processData, setProcessData] = useState({});
+
+  const handleProcessFormSubmit = () => {
+    submitProcessForm(account, processData) 
+  }
 
   useEffect(() => {
     // Connect with Metamask
@@ -81,41 +105,31 @@ const NewProcess = () => {
 
   return (
     <>
+      { console.debug("[ownerTokens] ", ownerTokens) }
       <button onClick={(e) => handleGetOwnerTokens(e)}>Carregar</button>
 
       <div className="new_process_process_info" >
         <h2>Página novo produto</h2>
         <Form.Group className=" ">
           <Form.Label>Digite aqui as informações do processo a ser cadastrado</Form.Label>
-          <Form.Control className="form_control" value={JSON.stringify(mockData)} as="textarea" rows={5} />
+          <Form.Control className="form_control" value={JSON.stringify(processData)} as="textarea" rows={5} />
         </Form.Group>
         <Button onClick={(e) => {
-          setMock({
-            data_de_criacao: currentDate,
-            nome: "Produção do quejo",
-            descricao: "processo de produção do queijo a partir da manipulação do leite",
-          })
+          setProcessData(mockData)
         }} variant="secondary">Popular</Button>
+        <Button onClick={() => handleProcessFormSubmit()} variant="secondary">Teste</Button>
         {/* Quando clicar no botão popular nos setamos os dados do processData */}
       </div>
       <div className="new_process_set" >
         <Form.Check onClick={(e) => {
-          setMock({
-            data_de_criacao: currentDate,
-            nome: "Produção do quejo",
-            descricao: "processo de produção do queijo a partir da manipulação do leite",
-            type: "create"
-          })
+          setProcessData({...mockData, processType: "create"})
+          mockData.processType = "create"
           document.getElementById("new_process_newProduct").className = "new_process_newProduct"
         }} type={"checkbox"} label={`Esse processo cria um novo produto ?`} />
 
         <Form.Check onClick={(e) => {
-          setMock({
-            data_de_criacao: currentDate,
-            nome: "Produção do quejo",
-            descricao: "processo de produção do queijo a partir da manipulação do leite",
-            type: "Update"
-          })
+          setProcessData({...mockData, processType: "update"})
+          mockData.processType = "update"
           document.getElementById("new_process_att_product").className = "new_process_att_product"
         }} id="checkbox_new_product" type={"checkbox"} label={`Esse processo atualiza um produto já existente?`} />
       </div>
@@ -150,7 +164,6 @@ const NewProcess = () => {
 
             </Form.Select>
           </Form.Group>
-
         </div>
       </div>
     </>
