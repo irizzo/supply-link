@@ -15,24 +15,25 @@ const contractAddress = CONTRACT_ADDRESS;
 const date = new Date()
 let currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}`
 
-const mockData = {
+const data = {
   processData: {
-    date: currentDate,
-    name: "Produção do Queijo",
-    description: "processo de produção do queijo a partir da manipulação do leite"
+    date: "2024-10-10T15:00",
+    name: "Produção de queijo",
+    description: "Produção de queijo minas frescal"
   },
-	processEntries: [],
-	processOuts: [
-		{
-			date: "2024-10-10T10:00",
-			name: "Nome do Produto",
-			description: "Descrição do Produto",
-			uniqueId: "LT202410_CCC",
-			tokenType: "product"
-		}
-  ],
-  processType: ""
+  processType: "",
+  // processEntries: ["LT202410_SSS", "LT202410_CCC"],
+  // processOuts: [
+  //   {
+  //     date: "2024-10-10T15:00",
+  //     name: "Queijo minas frescal",
+  //     description: "Queijo minas frescal",
+  //     uniqueId: "LT202410_QQQ",
+  //     tokenType: "product"
+  //   },
+  // ]
 }
+
 
 const NewProcess = () => {
   const [account, setAccount] = useState(null);
@@ -40,9 +41,11 @@ const NewProcess = () => {
   const [signer, setSigner] = useState(null);
   const [ownerTokens, setOwnerTokens] = useState([]);
   const [processData, setProcessData] = useState({});
+  const [mockData, setMock] = useState(data);
 
   const handleProcessFormSubmit = () => {
-    submitProcessForm(account, processData) 
+    // submitProcessForm(account, processData)
+    window.alert(`Processo cadastrado com sucesso! Nome do processo ${mockData.processData.name}`)
   }
 
   useEffect(() => {
@@ -104,8 +107,8 @@ const NewProcess = () => {
 
   return (
     <>
-      { console.debug("[ownerTokens] ", ownerTokens) }
-      <button onClick={(e) => handleGetOwnerTokens(e)}>Carregar</button>
+      {console.debug("[ownerTokens] ", ownerTokens)}
+      {/* <button onClick={(e) => handleGetOwnerTokens(e)}>Carregar</button> */}
 
       <div className="new_process_process_info" >
         <h2>Página novo produto</h2>
@@ -116,21 +119,50 @@ const NewProcess = () => {
         <Button onClick={(e) => {
           setProcessData(mockData)
         }} variant="secondary">Popular</Button>
-        <Button onClick={() => handleProcessFormSubmit()} variant="secondary">Teste</Button>
+        <Button onClick={() => handleProcessFormSubmit()} variant="secondary">Cadastrar</Button>
         {/* Quando clicar no botão popular nos setamos os dados do processData */}
       </div>
       <div className="new_process_set" >
-        <Form.Check onClick={(e) => {
-          setProcessData({...mockData, processType: "create"})
-          mockData.processType = "create"
-          document.getElementById("new_process_newProduct").className = "new_process_newProduct"
-        }} type={"checkbox"} label={`Esse processo cria um novo produto ?`} />
 
-        <Form.Check onClick={(e) => {
-          setProcessData({...mockData, processType: "update"})
-          mockData.processType = "update"
-          document.getElementById("new_process_att_product").className = "new_process_att_product"
-        }} id="checkbox_new_product" type={"checkbox"} label={`Esse processo atualiza um produto já existente?`} />
+        <Form>
+          {['radio'].map((type) => (
+            <div key={`inline-${type}`} >
+              <Form.Check onClick={(e) => {
+                setMock({
+                  mockData,
+                  type: "create"
+                })
+                // setAddProduct(true)
+                document.getElementById("new_process_newProduct").className = "new_process_newProduct"
+                document.getElementById("new_process_att_product").className = "new_process_att_product_none"
+              }}
+                inline
+                label="Esse processo cria um novo produto"
+                name="group1"
+                type={type}
+                id={`inline-${type}-1`}
+              />
+              <Form.Check onClick={(e) => {
+                setMock({
+                          mockData,
+
+                  type: "update"
+                })
+                // setAddProduct(true)
+
+                document.getElementById("new_process_att_product").className = "new_process_att_product"
+                document.getElementById("new_process_newProduct").className = "new_process_newProduct_none"
+
+              }}
+                inline
+                label="Esse processo atualiza um produto já existente"
+                name="group1"
+                type={type}
+                id={`inline-${type}-2`}
+              />
+            </div>
+          ))}
+        </Form>
       </div>
       <div className="new_process_main">
         <div id="new_process_newProduct" className="new_process_newProduct_none" >
@@ -140,12 +172,11 @@ const NewProcess = () => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Insumos do processo</Form.Label>
-            <Form.Control className="new_process_text_form" placeholder="Digite o titulo do produto" type="text"></Form.Control>
+            {/* <Form.Control className="new_process_text_form" placeholder="Digite o titulo do produto" type="text"></Form.Control> */}
             <Form.Select aria-label="Default select example">
               <option >Selecione o produto</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1">Sal marinho - LT202410_SSS</option>
+              <option value="2">Leite integral - LT202410_CCC</option>
               {/*  Aqui vai ter que ter um map de todos os produtos associados a esse tipo */}
             </Form.Select>
           </Form.Group>
@@ -153,12 +184,11 @@ const NewProcess = () => {
         <div id="new_process_att_product" className="new_process_att_product_none">
           <Form.Group className="mb-3">
             <Form.Label>Seleciona as informações do produto associado</Form.Label>
-            <Form.Control className="new_process_text_form" placeholder="Digite o titulo do produto" type="text"></Form.Control>
+            {/* <Form.Control className="new_process_text_form" placeholder="Digite o titulo do produto" type="text"></Form.Control> */}
             <Form.Select aria-label="Default select example">
               <option >Selecione o produto</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1">Sal marinho - LT202410_SSS</option>
+              <option value="2">Leite integral - LT202410_CCC</option>
               {/*  Aqui vai ter que ter um map de todos os produtos associados a esse tipo */}
 
             </Form.Select>

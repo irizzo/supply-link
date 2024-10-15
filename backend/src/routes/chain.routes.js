@@ -8,7 +8,7 @@ router
 	.post(chainController.getOwnerTokens)
 
 router
-	.route('/getProductHistory') // route: /chain/getOwnerTokensIds
+	.route('/getProductHistory') // route: /chain/getProductHistory
 	.get(chainController.getProductHistory)
 
 module.exports = router
