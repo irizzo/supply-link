@@ -105,3 +105,5 @@ Fluxo de buscar cadeia de processos de um produto
 ![Modelo Buscar cadeia de processos de um produto](modelo_busca_cadeia_produto.png) 
 
 Função Buscar cadeia de processos de um produto
+
+![Modelo Função Buscar cadeia de processos de um produto](modelo_funcao_busca.png)
