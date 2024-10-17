@@ -94,16 +94,14 @@ Fluxo:
 
 Frontend 
 
-![Modelo frontend]("modelo_front.png" "Modelo frontend") 
+![Modelo frontend](modelo_front.png) 
 
 Registar processo
 
-![Modelo Registar processo]("modelo_registar_processo.png" "Registar processo") 
+![Modelo Registar processo](modelo_registar_processo.png) 
 
 Fluxo de buscar cadeia de processos de um produto
 
-![Modelo Buscar cadeia de processos de um produto]("modelo_busca_cadeia_produto.png" "Buscar cadeia de processos de um produto") 
+![Modelo Buscar cadeia de processos de um produto](modelo_busca_cadeia_produto.png) 
 
 Função Buscar cadeia de processos de um produto
-
-![Modelo Função Buscar cadeia de processos de um produto]("modelo_funcao_busca.png" "Função Buscar cadeia de processos de um produto") 
