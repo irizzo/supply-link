@@ -26,21 +26,25 @@ Para facilitar, criei um ErrorHandler, pq aí a gente n precisa ficar lidando co
   
 ### Serviços (internos à api)
 
+- Chamadas a API da Abakhus
+
 ### Estruturas de dados
 
 ```js
 // token processo 
   {
-    owner: string,
-    data: {
-      id: number, // gerado pela blockchain
-      date: date // data que o processo aconteceu/foi finalizado,
-      entries: [] // tokenId[] dos produtos,
-      outs: [] // tokenId[] dos produtos, ()
-      name: string // (título do proceso - exemplo: venda de queijo),
-      description: string,
-      [...otherData] // outros dados especificos de cada empresa etc
-    }
+   walletAddress: string,
+    dadosDoProcesso: {
+        date: data que o processo aconteceu/foi finalizado,
+        nome: string (exemplo: venda de queijo),
+        descriçao: string, (opicional)
+        ...outros dados especificos de cada empresa etc
+    },
+    tipoDoProcesso: "create" | "update",
+    tipoDeToken: 'product' | 'process'
+    insumos: tokenId[] | [] ,
+    produtosParaCriar: produtos[] | [],
+    produtosParaAtualizar: tokenId[] | []
   }
 ```
 
@@ -54,36 +58,11 @@ Para facilitar, criei um ErrorHandler, pq aí a gente n precisa ficar lidando co
       name: string // título do produto - exemplo: queijo,
       description: string,
       identificador: string // identificador do lote ou identificador da unidade
+      tipoDeToken: 'product' | 'process'
       [...otherData] // outros dados especificos de cada empresa etc
     }
   }
 ```
-
-## Ideias da reunião
-
-### Front
-
-- Página de criar um produto
-  - Formulário para cadastrar um novo produto
-  - Opção de linkar o novo produto com um token existente. Essa parte teremos que pegar todos os tokens gerados pelo dono da carteira e mostar as informações daquele token.
-
-- Visualização da cadeia do produto. A partir de um token podemos ver todos os tokens referenciados pelos tokens anteriores
-
-- Página de alterar status de venda ou de transporte de um produto. Vamos gerar um novo token referenciado o ID token do produto que irá mudar o status e copiaremos os dados do token referenciado.
-
-### Back
-
-Iremos utilizar apenas uma carteira
-
-- Rotas
-  - Criar um produto
-  - Pegar todos os tokens de um owner
-  - Pegar todos os tokens da cadeia com base na id de um token
-  - Atualizar um produto (editar status de um produto criando um novo)
-
-## Rodar a aplicação
-
-`npm run dev`
 
 ## Arquitetura
 
@@ -94,26 +73,37 @@ Pastas:
 
   A parte da interação com a blockchain pode ficar separada, numa pasta de "modelos" ou algo assim, se for necessário (ou seja, se vermos que vai ter muito código repetido por exemplo)
 
-Fluxo que eu pensei:
+Fluxo:
   Rota - aponta para -> Controlador - chama o -> Serviço
 
 ## Routes
 
-Rotas que criei:
-
 ```
-  Criar um produto: POST /product/
-    - controlador: /src/controllers/product.controller.js => registerProduct
-
-  Atualizar um produto: POST /product/update
-    - controlador: /src/controllers/product.controller.js => updateProduct
-
-  Pegar todos os tokens de um owner: GET /chain/owner-chain
-    - controlador: /src/controllers/chain.controller.js => getTokensByOwner
-
-  Pegar todos os tokens da cadeia com base na id de um token: GET /chain/:tokenId
-    - controlador: /src/controllers/chain.controller.js => getTokenChain
-
-  Registrar um processo: POST /process/
+  Criar/Alterar um processo e criar um produto: POST /process/
     - controlador: /src/controllers/process.controller.js => registerProcess
+
+  Resgatar todos os tokens de um owner: GET /chain/owner-chain
+    - controlador: /src/controllers/chain.controller.js => getOwnerTokens
+
+  Resgatar todos os tokens de processos relacionados a um token de produto (Cadeia de processos de um produto): GET /chain/:tokenId
+    - controlador: /src/controllers/chain.controller.js => getProductHistory
+
 ```
+
+## Modelagem 
+
+Frontend 
+
+![Modelo frontend]("modelo_front.png" "Modelo frontend") 
+
+Registar processo
+
+![Modelo Registar processo]("modelo_registar_processo.png" "Registar processo") 
+
+Fluxo de buscar cadeia de processos de um produto
+
+![Modelo Buscar cadeia de processos de um produto]("modelo_busca_cadeia_produto.png" "Buscar cadeia de processos de um produto") 
+
+Função Buscar cadeia de processos de um produto
+
+![Modelo Função Buscar cadeia de processos de um produto]("modelo_funcao_busca.png" "Função Buscar cadeia de processos de um produto") 
